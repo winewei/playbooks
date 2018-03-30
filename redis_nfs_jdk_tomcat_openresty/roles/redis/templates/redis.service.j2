@@ -1,0 +1,14 @@
+[Unit]
+Description=Redis.Server
+After=network.target
+After=network-online.target
+After=network-online.target
+
+[Service]
+Type=forking
+User=redis
+ExecStart=/usr/local/bin/redis-server /etc/redis/{{ redis_bind_port }}.conf
+Restart=on-failure
+LimitNOFILE=65536
+[Install]
+WantedBy=multi-user.target

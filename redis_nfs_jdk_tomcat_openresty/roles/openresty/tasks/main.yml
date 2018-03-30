@@ -1,0 +1,44 @@
+---
+
+# Install openresty 
+
+- name: jugde openresty is installed or not.
+  shell: /usr/local/openresty/bin/openresty -v
+  register: result 
+  ignore_errors: True
+
+- name: Download openresty >> {{ openresty_download_url }}
+  when: result|failed
+  get_url: url={{ openresty_download_url }} dest={{openresty_dest_file }} mode=0644
+
+- name: Extract archive
+  when: result|failed
+  unarchive: src={{ openresty_dest_file }} dest={{ openresty_dest_dir }}
+
+- name: compile openresty
+  when: result|failed
+  shell: cd {{openresty_dest_dir_ex }}; ./configure
+
+- name: Make install
+  when: result|failed
+  make: chdir={{ openresty_dest_dir_ex }} target=install
+  become: yes
+
+- name: Add openresty user www
+  when: result|failed
+  user:
+        name: www
+        shell: /sbin/nologin
+
+- name: Copy openresty configure file
+  when: result|failed
+  template:
+        src: nginx.conf.j2
+        dest: /usr/local/openresty/nginx/conf/nginx.conf 
+
+- name: Make vhost directory
+  when: result|failed
+  file:
+        path: /usr/local/openresty/nginx/conf/vhost
+        state: directory 
+        mode: 0644

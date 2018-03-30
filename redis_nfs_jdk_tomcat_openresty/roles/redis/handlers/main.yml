@@ -1,0 +1,13 @@
+---
+
+- name: daemon-reload
+  command: systemctl daemon-reload
+  become: yes
+
+- name: enable redis
+  command: systemctl enable redis
+  become: yes
+
+- name: restart redis
+  command: systemctl restart redis 
+  become: yes

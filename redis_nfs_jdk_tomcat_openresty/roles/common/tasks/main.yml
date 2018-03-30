@@ -1,0 +1,20 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: Edit system limit configuration
+  when: (ansible_distribution == "RedHat" or ansible_distribution == "CentOS") and ansible_distribution_major_version == "7"    
+  copy: src={{ item.src_file }} dest={{ item.dest_file }} owner=root group=root mode=0644
+  with_items:
+        - {src_file: 'limits.conf', dest_file: '/etc/security/limits.conf'}
+        - {src_file: '20-nproc.conf', dest_file: '/etc/security/limits.d/20-nproc.conf'}
+
+- name: Install base software >> gcc gcc-c++ vim wget make
+  yum: name={{ item }} state=present
+  with_items:
+        - gcc
+        - gcc-c++
+        - vim
+        - make
+        - wget
+        - pcre-devel
+        - openssl-devel

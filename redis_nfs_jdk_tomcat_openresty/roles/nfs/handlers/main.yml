@@ -1,0 +1,7 @@
+---
+# 
+- name: enable nfs
+  command: systemctl enable nfs
+
+- name: restart nfs
+  command: systemctl restart nfs

@@ -1,0 +1,37 @@
+---
+
+# redis conf values
+
+#Jdk 
+jdk_url: http://file-script.oss-cn-shenzhen.aliyuncs.com/files/jdk1.8.0_141.tar.gz
+jdk_dest_file: /opt/jdk1.8.0_141.tar.gz
+jdk_file_md5: 'md5:6619f157109686a4a255a8c236d5f95d'
+jdk_path_profile: 'JAVA_HOME=/usr/local/jdk1.8.0_141 JRE_HOME=$JAVA_HOME/jre PATH=$JAVA_HOME/bin:$PATH'
+jdk_path_export: 'export JAVA_HOME JRE_HOME PATH'
+
+# Openresty
+openresty_download_url: https://openresty.org/download/openresty-1.13.6.1.tar.gz
+openresty_dest_file: /opt/openresty-1.13.6.1.tar.gz
+openresty_dest_dir: /opt/
+openresty_dest_dir_ex: /opt/openresty-1.13.6.1
+openresty_user: www
+
+# Nfs 
+nfs_storage_path: /data/nfs
+nfs_access: 172.31.0.0/16(rw,sync)
+
+# Tomcat
+tomcat_download_url: http://apache.parentingamerica.com/tomcat/tomcat-7/v7.0.85/bin/apache-tomcat-7.0.85.tar.gz
+tomcat_download_file: /opt/apache-tomcat-7.0.85.tar.gz
+tomcat_dest_path: /opt/
+tomcat_port: 8080
+tomcat_app_name: test
+tomcat_username: tomcat
+tomcat_jenkins_pub: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQEvbeEtZUFkfOE62B5M3Iu6Sk/Im9v4Zi6GWpR+Iu464oSe8T74kSs8vw5fW2pqnSpWRAwN7pZLAuxDj6dNq/LXuIfpFMNuN7BT75uBY0O9ewFf00vlsvChw+at5fNbU7EjoDmSwX0cy0cmji9RHIB2IMJ0A65p0zW7uLSrtERxSbbPlmvAKZYWKSkKbf1kBsYlA+wGB/seb2Mg7e0MWI92UQEUTFBxAHU005rIqG6vpthvPHm7gjAbkWexw1oV7zkFOSxYCxsQnniYFRjKW0FdrOxOeGgpXTYAS+Ub/9FvaLoOgf7mQh7HB8nyySc1Cho8fJu0rLLAx5ARaEhAWZ jenkins@ip-172-31-11-227.ap-northeast-2.compute.internal'
+
+# Redis
+redis_logfile_path: /data/redis/6379.log
+redis_data_dir_path: /data/redis/db/
+redis_bind_port: 6379
+redis_bind_address: 0.0.0.0
+redis_username: redis

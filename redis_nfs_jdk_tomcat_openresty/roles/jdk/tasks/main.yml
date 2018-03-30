@@ -1,0 +1,19 @@
+---
+# Install jdk to dest server
+
+- name: Download {{ jdk_url }}
+  get_url: url={{ jdk_url }} dest={{ jdk_dest_file }} mode=0644 checksum={{ jdk_file_md5 }}
+
+- name: Unarchive jdk1.8.0_141
+  unarchive: 
+        src: /opt/jdk1.8.0_141.tar.gz
+        dest: /opt/
+        copy: no
+        owner: root
+        group: root
+
+- name: Add jdk ENV
+  lineinfile: path=/tmp/profile line={{ jdk_path_profile }}
+
+- name: Export jdk ENV
+  lineinfile: path=/tmp/profile line={{ jdk_path_export }}

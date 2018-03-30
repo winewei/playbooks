@@ -1,0 +1,19 @@
+# Readis server
+
+#- hosts: redis
+#  become: yes
+#  become_method: sudo
+#
+#  roles:
+#        - common
+#        - redis
+
+- hosts: redis
+  become: yes
+  become_method: sudo
+  roles:
+        - tomcat
+#        - nfs
+#        - common
+#        - openresty
+#        - java_jdk 

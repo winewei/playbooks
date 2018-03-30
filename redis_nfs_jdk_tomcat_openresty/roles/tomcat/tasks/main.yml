@@ -1,0 +1,32 @@
+---
+# Tomcat server
+
+
+- name: Add user {{ tomcat_username }}
+  user: name={{ tomcat_username }} generate_ssh_key=yes ssh_key_bits=2048 ssh_key_file=.ssh/id_rsa
+
+- name: Copy jenkins ssh-key
+  lineinfile: create=yes path=/home/{{ tomcat_username }}/.ssh/authorized_keys line={{ tomcat_jenkins_pub }} owner={{ tomcat_username }} group={{ tomcat_username }} mode=0600
+
+
+- name: Tomcat download
+  get_url: url={{ tomcat_download_url }} dest={{ tomcat_download_file }} owner={{ tomcat_username }} group={{ tomcat_username }}  mode=0755
+
+- name: Create Tomcat workspace directory
+  file: path=/data/{{ tomcat_username }} state=directory mode=0755
+
+- name: Decompress 
+  unarchive: src={{tomcat_download_file }} dest=/data/{{ tomcat_username }} mode=0755
+
+- name: Rename tomcat server
+  shell: chdir=/data/{{ tomcat_username }} mv apache-tomcat-7.0.85 tomcat-{{ tomcat_app_name }}-{{ tomcat_port }}; rm -rf tomcat-{{ tomcat_app_name }}-{{ tomcat_port }}/apache-tomcat-7.0.85; rm -rf apache-tomcat-7.0.85; rm -rf tomcat-{{ tomcat_app_name }}-{{ tomcat_port }}/webapps/*
+
+- name: Clear webapps
+  file: path=/data/{{ tomcat_username }}/tomcat-{{ tomcat_app_name }}-{{ tomcat_port }}/webapps/ROOT state=directory mode=0755
+
+- name: Touch index.jsp file
+  file: path=/data/{{ tomcat_username }}/tomcat-{{ tomcat_app_name }}-{{ tomcat_port }}/webapps/ROOT/index.jsp state=touch mode=0755
+
+- name: Chown tomcat
+  file: path=/data/{{ tomcat_username }} owner={{ tomcat_username }} group={{ tomcat_username }} mode=0755
+

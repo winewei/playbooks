@@ -1,0 +1,28 @@
+---
+# Nfs server deploy
+
+- name: Install Nfs software
+  yum: name={{ item }} state=present
+  with_items:
+        - nfs4-acl-tools 
+        - nfsometer
+        - nfs-utils
+        - nfstest
+        - rpcbind
+
+- name: Create nfs storage directory
+  file:
+        path: /data/nfs
+        state: directory
+        owner: nfsnobody
+        group: nfsnobody
+        mode: 0777
+
+- name: Config nfs server
+  template:
+        src: nfs.conf.j2
+        dest: /etc/exports
+        mode: 0644
+  notify:
+        - enable nfs
+        - restart nfs
